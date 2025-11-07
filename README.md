@@ -1,1 +1,1 @@
-# financeApp
+# Finora

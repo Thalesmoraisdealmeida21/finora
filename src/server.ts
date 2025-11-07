@@ -1,27 +1,26 @@
-import Fastify, { FastifyRequest, FastifyReply } from 'fastify'
-import routes from './routes/index.js'
+import fastify from 'fastify'
+import prismaPlugin from './prisma/prisma.plugin'
+import accountsRoutes from './routes/accounts.js'
 
-const fastify = Fastify({
-  logger: true
-})
+const app = fastify()
 
-// Rota raiz
-fastify.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
+app.get('/', async (request, reply) => {
   return { hello: 'world' }
 })
 
-/**
- * Run the server!
- */
 const start = async () => {
   try {
-    // Registrar rotas como middleware
-    await fastify.register(routes)
+    // Registrar o plugin do Prisma antes de iniciar o servidor
+    await app.register(prismaPlugin)
     
-    await fastify.listen({ port: 3000, host: '0.0.0.0' })
+    // Registrar as rotas de accounts
+    await app.register(accountsRoutes)
+    
+    await app.listen({ port: 3000, host: '0.0.0.0' })
     console.log('Server is running on http://localhost:3000')
   } catch (err) {
-    fastify.log.error(err)
+    app.log.error(err)
+    process.exit(1)
   }
 }
 
