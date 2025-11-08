@@ -1,11 +1,7 @@
 import { FastifyError, FastifyRequest, FastifyReply } from 'fastify'
 import { ZodError } from 'zod'
 
-export function errorHandler(
-  error: FastifyError,
-  request: FastifyRequest,
-  reply: FastifyReply
-) {
+export function errorHandler(error: FastifyError, request: FastifyRequest, reply: FastifyReply) {
   // Log do erro
   request.log.error(error)
 
@@ -14,7 +10,7 @@ export function errorHandler(
     const zodError = error as unknown as ZodError
     return reply.code(400).send({
       error: 'Dados inválidos',
-      details: zodError.issues.map((issue) => ({
+      details: zodError.issues.map(issue => ({
         path: issue.path.join('.'),
         message: issue.message,
       })),
@@ -51,4 +47,3 @@ export function errorHandler(
     }),
   })
 }
-

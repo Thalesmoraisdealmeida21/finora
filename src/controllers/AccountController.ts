@@ -9,16 +9,18 @@ const createAccountSchema = z.object({
   balance: z.number().optional().default(0),
 })
 
-const updateAccountSchema = z.object({  
+const updateAccountSchema = z.object({
   name: z.string().optional(),
   balance: z.number().optional(),
 })
 
-
 export async function createAccountController(request: FastifyRequest, reply: FastifyReply) {
   const validatedDataAccount = createAccountSchema.parse(request.body)
 
-  const account = await accountService.createAccount(validatedDataAccount.name, validatedDataAccount.balance)
+  const account = await accountService.createAccount(
+    validatedDataAccount.name,
+    validatedDataAccount.balance
+  )
   if (!account) {
     return reply.code(500).send({ error: 'Error creating new account' })
   } else {
@@ -32,13 +34,16 @@ export async function gethistoryBalanceController(request: FastifyRequest, reply
   // import { gethistoryBalance } from '../services/Account.js'
   const historyBalance = await accountService.gethistoryBalance(id)
   return reply.code(200).send(historyBalance)
- 
 }
 
 export async function updateAccount(request: FastifyRequest, reply: FastifyReply) {
   const validateUpdateAccount = updateAccountSchema.parse(request.body)
   const { id } = request.params as { id: string }
-  const account = await accountService.updateAccount(id, validateUpdateAccount.name, validateUpdateAccount.balance)
+  const account = await accountService.updateAccount(
+    id,
+    validateUpdateAccount.name,
+    validateUpdateAccount.balance
+  )
   if (!account) {
     return reply.code(500).send({ error: 'Error updating account' })
   } else {
@@ -48,7 +53,6 @@ export async function updateAccount(request: FastifyRequest, reply: FastifyReply
 
 export async function getAccountById(request: FastifyRequest, reply: FastifyReply) {
   const { id } = request.params as { id: string }
-  const prisma = request.server.prisma
   const account = await accountService.getAccountById(id)
   if (!account) {
     return reply.code(500).send({ error: 'Error getting account' })

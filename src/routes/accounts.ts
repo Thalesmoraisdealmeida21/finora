@@ -1,6 +1,11 @@
 import fp from 'fastify-plugin'
 import { FastifyPluginAsync } from 'fastify'
-import { createAccountController, getAccountById, gethistoryBalanceController, updateAccount } from '../controllers/AccountController.js'
+import {
+  createAccountController,
+  getAccountById,
+  gethistoryBalanceController,
+  updateAccount,
+} from '../controllers/AccountController.js'
 
 const accountsRoutes: FastifyPluginAsync = fp(async server => {
   server.get('/accounts', async (request, reply) => {
@@ -19,7 +24,6 @@ const accountsRoutes: FastifyPluginAsync = fp(async server => {
   server.post('/accounts', createAccountController)
   server.put('/accounts/:id', updateAccount)
   server.get('/accounts/:id', getAccountById)
-
 })
 
 export default accountsRoutes

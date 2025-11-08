@@ -9,11 +9,6 @@ const app = fastify()
 // Registrar o error handler
 app.setErrorHandler(errorHandler)
 
-app.get('/', async (request, reply) => {
-  return { hello: 'world' }
-})
-
-
 const start = async () => {
   try {
     await app.register(prismaPlugin)
