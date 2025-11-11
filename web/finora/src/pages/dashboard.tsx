@@ -1,21 +1,24 @@
 import { Header } from "@/components/Header"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import axios from "axios"
-import { ArrowUp, TrendingUp } from "lucide-react"
+import { TrendingUp } from "lucide-react"
 import { useEffect, useState } from "react"
 
-const totalBalance: Number = 1000.00
+const totalBalance: number = 1000.00
 
 
-  const getDollarQuotation = async () => {
-    // // const response = await axios.get('https://economia.awesomeapi.com.br/last/USD-BRL')
-    return 5
-  }
+  
 
   
 const dashboard = () => {
   const [dollarQuotation, setDollarQuotation] = useState(0)
   const [bitcoinQuotation, setBitcoinQuotation] = useState<number>(0)
+
+  const getDollarQuotation = async () => {
+    // // const response = await axios.get('https://economia.awesomeapi.com.br/last/USD-BRL')
+    setDollarQuotation(5)
+    return 5
+  }
 
   const getBitcoinQuotation = async () => {
     const response = await axios.get('https://api.mercadobitcoin.net/api/v4/tickers?symbols=BTC-BRL')

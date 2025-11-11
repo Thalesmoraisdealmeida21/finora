@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Header } from "@/components/Header"
 import { Button } from "@/components/ui/button"
 import { Wallet } from "lucide-react"
@@ -7,7 +8,6 @@ import { UpdateAccount } from "@/components/UpdateAccount"
 import { Spinner } from "@/components/ui/spinner"
 import api from "@/lib/api"
 import axios from "axios"
-import { Link } from "react-router-dom"
 
 interface Account {
     id: string;
@@ -17,6 +17,7 @@ interface Account {
 }
 
 const account = () => {
+    const navigate = useNavigate()
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false)
     const [accountId, setAccountId] = useState<string >('')
