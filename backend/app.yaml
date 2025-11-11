@@ -1,0 +1,5 @@
+runtime: nodejs24
+instance_class: F4
+
+
+entrypoint: node dist/server.js
